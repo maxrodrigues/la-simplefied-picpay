@@ -4,11 +4,16 @@ namespace App\Services\Auth;
 
 use App\Models\Client;
 use App\Repositories\ClientRepository;
+use App\Repositories\Contracts\ClientRepositoryContract;
+use App\Repositories\Contracts\StoreRepositoryContract;
 use App\Services\Auth\Contracts\RegisterContract;
 
 class RegisterService implements RegisterContract
 {
-    public function __construct(private ClientRepository $clientRepository)
+    public function __construct(
+        private readonly ClientRepositoryContract $clientRepository,
+        private readonly StoreRepositoryContract $storeRepository,
+    )
     {
     }
 
@@ -31,7 +36,7 @@ class RegisterService implements RegisterContract
 
     public function createNewStore(array $payload): bool
     {
-        if ($this->clientRepository->create($payload)) {
+        if ($this->storeRepository->create($payload)) {
             return true;
         }
 

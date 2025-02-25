@@ -4,12 +4,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 it('register new user with client', function () {
     $data = [
-        'name'     => 'User Test',
-        'email'    => 'tester@test.com',
-        'password' => 'password',
+        'name'                  => 'User Test',
+        'email'                 => 'tester@test.com',
+        'password'              => 'password',
         'password_confirmation' => 'password',
-        'document' => '10297481010',
-        'type'     => 'client',
+        'document'              => '10297481010',
+        'type'                  => 'client',
     ];
 
     $response = $this->post('api/register', $data);
@@ -18,7 +18,7 @@ it('register new user with client', function () {
     $this->assertDatabaseCount('clients', 1);
 });
 
-it ('response error when some required data no send', function () {
+it('response error when some required data no send', function () {
     $data = [
         'name'     => 'User Test',
         'email'    => 'tester@test.com',
@@ -31,19 +31,17 @@ it ('response error when some required data no send', function () {
     $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 });
 
-it ('register new user with store', function () {
+it('register new user with store', function () {
     $data = [
-        'name'     => 'User Test',
-        'email'    => 'tester@test.com',
-        'password' => 'password',
+        'name'                  => 'User Test',
+        'email'                 => 'tester@test.com',
+        'password'              => 'password',
         'password_confirmation' => 'password',
-        'document' => fake('pt_BR')->company(),
-        'type'     => 'client',
-        'address' => fake('pt_BR')->address,
-        'phone' => fake('pt_BR')->phoneNumber,
+        'document'              => '18387569000117',
+        'type'                  => 'store',
+        'address'               => fake('pt_BR')->address,
+        'phone'                 => fake('pt_BR')->phoneNumber,
     ];
-
-    dd($data);
 
     $response = $this->post('api/register', $data);
     $response->assertStatus(Response::HTTP_CREATED);

@@ -3,7 +3,6 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Client;
-use App\Repositories\BaseRepository;
 
 interface ClientRepositoryContract
 {
