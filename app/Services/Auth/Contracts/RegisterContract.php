@@ -2,6 +2,4 @@
 
 namespace App\Services\Auth\Contracts;
 
-interface RegisterContract
-{
-}
+interface RegisterContract {}

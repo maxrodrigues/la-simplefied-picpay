@@ -16,16 +16,21 @@ class ClientRepository extends BaseRepository implements ClientRepositoryContrac
     public function create(array $payload): Client
     {
         $client = $this->model->create([
-            'name'     => $payload['name'],
+            'name' => $payload['name'],
             'document' => $payload['document'],
         ]);
 
         $client->user()->create([
-            'name'     => $payload['name'],
-            'email'    => $payload['email'],
+            'name' => $payload['name'],
+            'email' => $payload['email'],
             'password' => Hash::make($payload['password']),
         ]);
 
         return $client;
+    }
+
+    public function getDocument(string $document): ?Client
+    {
+        return $this->model->where('document', $document)->first();
     }
 }

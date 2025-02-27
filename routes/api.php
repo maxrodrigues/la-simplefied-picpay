@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
-use Illuminate\Http\{JsonResponse, Response};
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('health', function () {

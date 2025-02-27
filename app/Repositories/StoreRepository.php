@@ -16,19 +16,23 @@ class StoreRepository extends BaseRepository implements StoreRepositoryContract
     public function create(array $payload): Store
     {
         $store = $this->model->create([
-            'name'     => $payload['name'],
-            'address'  => $payload['address'],
-            'phone'    => $payload['phone'],
+            'name' => $payload['name'],
+            'address' => $payload['address'],
+            'phone' => $payload['phone'],
             'document' => $payload['document'],
         ]);
 
         $store->user()->create([
-            'name'     => $payload['name'],
-            'email'    => $payload['email'],
+            'name' => $payload['name'],
+            'email' => $payload['email'],
             'password' => Hash::make($payload['password']),
         ]);
 
         return $store;
     }
 
+    public function getDocument(string $document): ?Store
+    {
+        return $this->model->where('document', $document)->first();
+    }
 }

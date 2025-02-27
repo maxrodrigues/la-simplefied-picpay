@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Contracts\Validation\{ValidationRule, Validator};
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,14 +26,14 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'                  => 'required|string',
-            'email'                 => 'required|string|email|unique:users,email',
-            'password'              => 'required|string|confirmed',
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|confirmed',
             'password_confirmation' => 'required|string|same:password',
-            'type'                  => 'required',
-            'document'              => 'required',
-            'address'                => 'sometimes|string',
-            'phone'                 => 'sometimes|string',
+            'type' => 'required',
+            'document' => 'required',
+            'address' => 'sometimes|string',
+            'phone' => 'sometimes|string',
         ];
     }
 

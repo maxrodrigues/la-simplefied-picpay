@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Auth\RegisterService;
 use Exception;
-use Illuminate\Http\{JsonResponse};
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
@@ -15,6 +15,7 @@ class RegisterController extends Controller
     {
         //
     }
+
     public function __invoke(RegisterRequest $request): JsonResponse
     {
         try {
@@ -22,9 +23,9 @@ class RegisterController extends Controller
             $this->registerService->register($data);
 
             return new JsonResponse('created', Response::HTTP_CREATED);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return new JsonResponse([
-                'message' => $e->getMessage(),
+                'message' => $exception->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
         }
     }

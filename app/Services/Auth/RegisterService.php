@@ -2,22 +2,23 @@
 
 namespace App\Services\Auth;
 
-use App\Models\Client;
-use App\Repositories\ClientRepository;
 use App\Repositories\Contracts\ClientRepositoryContract;
 use App\Repositories\Contracts\StoreRepositoryContract;
 use App\Services\Auth\Contracts\RegisterContract;
+use App\Services\Contracts\ClientServiceContract;
+use App\Services\Contracts\StoreServiceContract;
+use Exception;
 
 class RegisterService implements RegisterContract
 {
     public function __construct(
         private readonly ClientRepositoryContract $clientRepository,
         private readonly StoreRepositoryContract $storeRepository,
-    )
-    {
-    }
+        private readonly StoreServiceContract $storeService,
+        private readonly ClientServiceContract $clientService,
+    ) {}
 
-    public function register(array $payload)
+    public function register(array $payload): bool
     {
         return match ($payload['type']) {
             'client' => $this->createNewClient($payload),
@@ -27,19 +28,26 @@ class RegisterService implements RegisterContract
 
     public function createNewClient(array $payload): bool
     {
-        if ($this->clientRepository->create($payload)) {
-            return true;
+        $isDocumentExists = $this->clientService->isDocumentExists($payload['document']);
+        if ($isDocumentExists) {
+            throw new Exception('Already exists user with this CPF');
         }
+
+        $this->clientRepository->create($payload);
 
         return false;
     }
 
     public function createNewStore(array $payload): bool
     {
-        if ($this->storeRepository->create($payload)) {
-            return true;
+        $isDocumentExists = $this->storeService->isDocumentExists($payload['document']);
+
+        if ($isDocumentExists) {
+            throw new Exception('Already exists user with this CNPJ');
         }
 
-        return false;
+        $this->storeRepository->create($payload);
+
+        return true;
     }
 }
